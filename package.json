@@ -1,0 +1,20 @@
+{
+  "name": "practicas_1",
+  "version": "1.0.0",
+  "main": "node.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env --watch index.js" 
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "comentario": {
+    "--watch": "es un comando para estar atentos a cambios en los archivos sin apagar el servidor",
+    " --env-file=.env ": "es un comando para leer variables de entorno del archivo .env"
+
+  }
+}
