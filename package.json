@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env.develop --watch index.js",
-    "prod": "node --env-file=.env.prod index.js"
+    "prod": "node --env-file=.env.prod index.js",
+    "start": "node index.js"
   },
+
   "author": "",
   "license": "ISC",
   "description": "",
