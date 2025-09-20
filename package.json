@@ -8,16 +8,15 @@
     "prod": "node --env-file=.env.prod index.js",
     "start": "node index.js"
   },
-
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.18.1"
   },
   "comentario": {
     "--watch": "es un comando para estar atentos a cambios en los archivos sin apagar el servidor",
     " --env-file=.env ": "es un comando para leer variables de entorno del archivo .env"
-
   }
 }
