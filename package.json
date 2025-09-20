@@ -4,7 +4,8 @@
   "main": "node.js",
   "type": "module",
   "scripts": {
-    "start": "node --env-file=.env --watch index.js" 
+    "dev": "node --env-file=.env.develop --watch index.js",
+    "prod": "node --env-file=.env.prod index.js"
   },
   "author": "",
   "license": "ISC",
