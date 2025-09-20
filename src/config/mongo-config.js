@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 
 export async function mongoConfig() {
     try{
         const mongoUri = process.env.MONGO_URI
-        await mongoose.Connection(mongoUri)
+        await mongoose.connect(mongoUri)
         console.log("mongodb conectado correctamente");
     }
     catch(err){

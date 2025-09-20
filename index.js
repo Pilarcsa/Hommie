@@ -1,5 +1,5 @@
 import express from "express";
-import { mongoConfig } from "./src/config/mongo-config";
+import { mongoConfig } from "./src/config/mongo-config.js";
 
 process.env.NODE_ENV === "production" ? console.log("modo produccion") : console.log("modo desarrollo");
 
@@ -9,15 +9,14 @@ app.use(express.json());
 
 try {
     await mongoConfig()
-    console.log("mongodb conectado correctamente");
 }
 catch (err) {
     console.error("error en la conexión de la base datos en mongodb", err);
     process.exit(1);
 }
-app.get("/usuario", (req, res) => {
+app.get("/api/user-profile", (req, res) => {
 
-    res.send("respuesta ruta usuario");
+    res.send("respuesta ruta /api/user-profile");
 });
 
 
