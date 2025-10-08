@@ -5,14 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env.develop --watch index.js",
-    "prod": "node --env-file=.env.prod index.js",
+    "prod": "node --env-file=.env.prod --watch index.js",
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1"
   },
   "comentario": {
