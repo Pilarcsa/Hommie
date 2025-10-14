@@ -5,7 +5,7 @@ import userModel from "./users-model.js";
 
 const getUserProfile = async (id) => {
 
-    const user = await userModel.findOne({userId : id}).select("-password")
+    const user = await userModel.findOne({ userId: id }).select("-password")
     return user
 }
 
@@ -14,4 +14,4 @@ const getUserByEmail = async (email) => {
 
 }
 
-export default {getUserProfile,  getUserByEmail}
+export default { getUserProfile, getUserByEmail }

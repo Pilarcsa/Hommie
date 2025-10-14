@@ -2,7 +2,9 @@ import express from "express";
 import { mongoConfig } from "./src/config/mongo-config.js";
 import userRouter from "./src/components/users/user-router.js";
 import authRouter from "./src/auth/auth-router.js"
+import postRouter from "./src/components/posts/post-router.js"
 import cookieParser from "cookie-parser";
+
 
 process.env.NODE_ENV === "production" ? console.log("modo produccion") : console.log("modo desarrollo");
 
@@ -23,7 +25,9 @@ catch (err) {
 
 app.use("/api/user", userRouter);
 
-app.use("/api/auth", authRouter)
+app.use("/api/auth", authRouter);
+
+app.use("/api/post", postRouter);
 
 app.listen(process.env.PORT, () => {
     console.log("servidor corriendo en puerto localhost 3000.");
