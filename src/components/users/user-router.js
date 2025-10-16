@@ -7,4 +7,5 @@ const router = express.Router()
 
 router.get("/user-profile/:id", getUserProfile)
 
+
 export default router

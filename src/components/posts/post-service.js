@@ -8,13 +8,33 @@ const createPost = async (data) => {
 
 }
 
-const getPosts = async (id) =>{
+const getPostsById = async (id) =>{
     const posts = await postModel.find({userId : id }).select("-__v");
     return posts 
 }
 
+const getAllPosts = async () =>{
+    const posts = await postModel.find().select("-__v");
+    return posts 
+}
+
+const deletePost = async (id) =>{
+     await postModel.findByIdAndDelete(id)
+}
+
+const updatePostById = async (id, data) => {
+    console.log(data)
+   
+    const post = await postModel.findByIdAndUpdate( id, data, { new : true }) 
+    console.log(post)
+   return post
+}
+
 export default { 
     createPost,
-    getPosts
+    getPostsById,
+    getAllPosts,
+    deletePost,
+    updatePostById
  };
 
