@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "node --env-file=.env.develop --watch index.js",
     "prod": "node --env-file=.env.prod --watch index.js",
+    "dev:client": "npm run dev --prefix client",
+    "dev:all": "concurrently \"npm:dev:server\" \"npm:dev:client\"",
     "start": "node index.js"
   },
   "author": "",
@@ -14,6 +16,7 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1"
@@ -21,5 +24,10 @@
   "comentario": {
     "--watch": "es un comando para estar atentos a cambios en los archivos sin apagar el servidor",
     " --env-file=.env ": "es un comando para leer variables de entorno del archivo .env"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
+
 }
+
