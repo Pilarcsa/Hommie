@@ -6,7 +6,7 @@ const authMidleware = (req,res,next) => {
         const token = req.cookies.token
         if(!token) return response.sendError(res, "no autenticado", 401);
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(process.env.JWT_SECRET)
+        console.log(process.env.JWT_SECRET)//PROBLEMA EN RENDER AL LANZAR CREATE/DELETE/UPDATE
         if(!decoded) return response.sendError(res, "token invalido", 401);
         req.decoded = decoded
         console.log(req.decoded)
