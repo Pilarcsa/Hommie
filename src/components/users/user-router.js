@@ -3,9 +3,10 @@
 import express from "express"
 import getUserProfile from "./user-controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/user-profile/:id", getUserProfile)
+// Define la ruta GET para obtener el perfil de un usuario por su id
+router.get("/user-profile/:id", getUserProfile);
 
-
-export default router
+// Exporta el router para usarlo en el servidor principal
+export default router;

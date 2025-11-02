@@ -1,50 +1,70 @@
 import response from "../../utils/response.js"
-import userService from "../users/user-service.js";
 import postService from "./post-service.js";
 import mongoose from "mongoose";
+import postModel from "./post-model.js";
 
+// Crea un nuevo post asociando el usuario autenticado al contenido enviado
 const createPost = async (req, res) => {
-    const { description } = req.body;
-    const { userId } = req.decoded.user;
-    console.log(userId)
-    try {
-        if (!description) return response.sendError(res, "uno o mas campos requeridos no fueron enviados")
-        const user = userService.getUserProfile(userId);
-        if (!user) return response.sendError(res, "usuario no encontrado", 404)
-        const post = await postService.createPost({ userId, description }); console.log(post)
-        return response.sendSuccess(res, "post creado exitosamente", post, 201)
-
-    } catch (error) {
-        return response.sendError(res, error.message, 500)
+  try {
+    const userId = req.decoded?.id;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return response.sendError(res, "userId inválido", 400);
     }
-}
 
+    const data = { ...req.body };
+    delete data.userId;
+    data.userId = userId;
+
+    const post = await postService.createPost(data);
+    return response.sendSuccess(res, "post creado", post, 201);
+  } catch (err) {
+    return response.sendError(res, err.message || "error del servidor", 500);
+  }
+};
+
+// Obtiene los posts publicados por un usuario específico
 const getPostsById = async (req, res) => {
     const id = parseInt(req.params.id);
     try {
         const posts = await postService.getPostsById(id);
-        console.log(id)
         if (!posts.length) return response.sendError(res, "usuario no ha publicado", 404)
         return response.sendSuccess(res, "posts encontrados", posts, 200)
-
     } catch (error) {
         return response.sendError(res, error.message, 500)
-
     }
 }
 
-const getAllPosts = async (req, res) => {
+// Devuelve los posts creados por el usuario autenticado
+const getMyPosts = async (req, res) => {
+  try {
+    const userId = req.decoded?.id;
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return response.sendError(res, "userId inválido", 400);
+    }
 
+    const posts = await postModel
+      .find({ userId: new mongoose.Types.ObjectId(userId) })
+      .select("-__v");
+
+    return response.sendSuccess(res, "posts del usuario", posts, 200);
+  } catch (err) {
+    console.error("[/post/me] BYPASS ERROR:", err?.stack || err);
+    return response.sendError(res, "error del servidor", 500);
+  }
+};
+
+// Obtiene todos los posts existentes en la base de datos
+const getAllPosts = async (req, res) => {
     try {
         const posts = await postService.getAllPosts();
         if (!posts.length) return response.sendError(res, "no han publicado posts", 404)
         return response.sendSuccess(res, "posts encontrados", posts, 200)
-
     } catch (error) {
         return response.sendError(res, error.message, 500)
     }
 }
 
+// Elimina un post por su id si existe y es válido
 const deletePost = async (req, res) => {
     try {
         const id = req.params.id;
@@ -55,11 +75,10 @@ const deletePost = async (req, res) => {
         return response.sendSuccess(res, "post eliminado exitosamente")
     } catch (error) {
         return response.sendError(res, error.message, 500)
-
     }
-
 }
 
+// Actualiza un post específico con los datos enviados
 const updatePostById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -68,8 +87,7 @@ const updatePostById = async (req, res) => {
             return response.sendError(res, "id invalido", 400)
         }
         
-        const post = await postService.updatePostById( id, data);
-        console.log(post)
+        const post = await postService.updatePostById(id, data);
         return response.sendSuccess(res, "post actualizado exitosamente", post)
     } catch (error) {
         return response.sendError(res, error.message, 500)
@@ -79,8 +97,8 @@ const updatePostById = async (req, res) => {
 export default {
     createPost,
     getPostsById,
+    getMyPosts,
     getAllPosts,
     deletePost,
     updatePostById
 }
-

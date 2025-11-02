@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define la estructura de los datos del usuario en la base de datos
 const userSchema = new mongoose.Schema({
     userId: {
         type: Number,
@@ -37,11 +38,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         Comment: "avatar del usuario"
     },
-
-
 })
 
+// Crea el modelo de usuario usando el esquema definido
 const userModel = mongoose.model("user", userSchema)
 
 export default userModel
-

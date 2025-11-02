@@ -1,16 +1,17 @@
-//manejar las rutas solo
-import express from "express"
-import postController from "./post-controller.js"
+
+import express from "express";
+import postController from "./post-controller.js";
 import authMiddleware from "../../middlewares/auth-middleware.js";
 
-const router = express.Router()
+const router = express.Router();
 
-
-router.post("/", authMiddleware, postController.createPost);//si no estoy logeado no es posible crear un post //ni contactar con otros usuarios
-router.get("/feed", postController.getAllPosts);//comenta error
-router.get("/:id", postController.getPostsById);
-router.patch("/:id", authMiddleware, postController.updatePostById)
+// Define las rutas principales para crear, leer, actualizar y eliminar posts
+router.post("/", authMiddleware, postController.createPost);
+router.get("/feed", postController.getAllPosts);
+router.get("/me", authMiddleware, postController.getMyPosts);
+router.get("/", postController.getPostsById);
+router.patch("/:id", authMiddleware, postController.updatePostById);
 router.delete("/:id", authMiddleware, postController.deletePost);
 
-
-export default router
+// Exporta el router para integrarlo en la aplicación principal
+export default router;
