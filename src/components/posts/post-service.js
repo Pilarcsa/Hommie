@@ -13,13 +13,18 @@ const createPost = async (data) => {
 };
 
 // Busca posts por userId y añade datos básicos del usuario
-const getPostsById = async (id) => {
+/*const getPostsById = async (id) => {
+  console.log(id)
   const posts = await postModel
     .find({ userId: id })
     .populate("userId", "fullName avatarUrl age city occupation title description")
     .select("-__v");
   return posts;
-};
+};*/
+const getPostsById = async(id) =>{
+const posts = await postModel.find({userId:id}).select("-__v")
+return posts
+}
 
 // Obtiene posts del usuario autenticado usando ObjectId normalizado
 const getMyPosts = async (userId) => {

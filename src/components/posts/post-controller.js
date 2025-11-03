@@ -24,7 +24,7 @@ const createPost = async (req, res) => {
 
 // Obtiene los posts publicados por un usuario específico
 const getPostsById = async (req, res) => {
-    const id = parseInt(req.params.id);
+     const id = req.decoded?.user.userId;
     try {
         const posts = await postService.getPostsById(id);
         if (!posts.length) return response.sendError(res, "usuario no ha publicado", 404)

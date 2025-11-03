@@ -16,7 +16,7 @@ const authMiddleware = (req, res, next) => {
 
     // Decodifica y verifica el token JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+   
     // Extrae y valida el id del usuario contenido en el token
     const rawId = decoded?.user?._id;
     if (typeof rawId !== "string" || !mongoose.Types.ObjectId.isValid(rawId)) {

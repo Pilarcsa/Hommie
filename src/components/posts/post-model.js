@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // Define el esquema del post con referencias, tipos y validaciones
 const postSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     ref: "User",
     required: true,
     index: true,
