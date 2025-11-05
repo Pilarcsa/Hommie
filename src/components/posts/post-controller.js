@@ -24,14 +24,14 @@ const createPost = async (req, res) => {
 
 // Obtiene los posts publicados por un usuario específico
 const getPostsById = async (req, res) => {
-     const id = req.decoded?.user.userId;
-    try {
-        const posts = await postService.getPostsById(id);
-        if (!posts.length) return response.sendError(res, "usuario no ha publicado", 404)
-        return response.sendSuccess(res, "posts encontrados", posts, 200)
-    } catch (error) {
-        return response.sendError(res, error.message, 500)
-    }
+  const id = req.decoded?.user.userId;
+  try {
+    const posts = await postService.getPostsById(id);
+    if (!posts.length) return response.sendError(res, "usuario no ha publicado", 404)
+    return response.sendSuccess(res, "posts encontrados", posts, 200)
+  } catch (error) {
+    return response.sendError(res, error.message, 500)
+  }
 }
 
 // Devuelve los posts creados por el usuario autenticado
@@ -55,50 +55,50 @@ const getPostsById = async (req, res) => {
 
 // Obtiene todos los posts existentes en la base de datos
 const getAllPosts = async (req, res) => {
-    try {
-        const posts = await postService.getAllPosts();
-        if (!posts.length) return response.sendError(res, "no han publicado posts", 404)
-        return response.sendSuccess(res, "posts encontrados", posts, 200)
-    } catch (error) {
-        return response.sendError(res, error.message, 500)
-    }
+  try {
+    const posts = await postService.getAllPosts();
+    if (!posts.length) return response.sendError(res, "no han publicado posts", 404)
+    return response.sendSuccess(res, "posts encontrados", posts, 200)
+  } catch (error) {
+    return response.sendError(res, error.message, 500)
+  }
 }
 
 // Elimina un post por su id si existe y es válido
 const deletePost = async (req, res) => {
-    try {
-        const id = req.params.id;
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return response.sendError(res, "id invalido", 400)
-        }
-        await postService.deletePost(id)
-        return response.sendSuccess(res, "post eliminado exitosamente")
-    } catch (error) {
-        return response.sendError(res, error.message, 500)
+  try {
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.sendError(res, "id invalido", 400)
     }
+    await postService.deletePost(id)
+    return response.sendSuccess(res, "post eliminado exitosamente")
+  } catch (error) {
+    return response.sendError(res, error.message, 500)
+  }
 }
 
 // Actualiza un post específico con los datos enviados
 const updatePostById = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const data = req.body
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return response.sendError(res, "id invalido", 400)
-        }
-        
-        const post = await postService.updatePostById(id, data);
-        return response.sendSuccess(res, "post actualizado exitosamente", post)
-    } catch (error) {
-        return response.sendError(res, error.message, 500)
+  try {
+    const id = req.params.id;
+    const data = req.body
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.sendError(res, "id invalido", 400)
     }
+
+    const post = await postService.updatePostById(id, data);
+    return response.sendSuccess(res, "post actualizado exitosamente", post)
+  } catch (error) {
+    return response.sendError(res, error.message, 500)
+  }
 }
 
 export default {
-    createPost,
-    getPostsById,
-    getMyPosts,
-    getAllPosts,
-    deletePost,
-    updatePostById
+  createPost,
+  getPostsById,
+  getMyPosts,
+  getAllPosts,
+  deletePost,
+  updatePostById
 }
