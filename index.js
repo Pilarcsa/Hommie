@@ -18,7 +18,7 @@ app.use(helmet());
 app.use(express.json());
 
 // Configuración de CORS con lista blanca de dominios permitidos
-const whiteList = ["http://localhost:5173", "https://hommie-front-teal.vercel.app","https://hommie-front-teal.vercel.app/login", "https://hommie-front-teal.vercel.app/feed", "https://hommie-front-teal.vercel.app/profile" ];
+const whiteList = ["http://localhost:5173", "https://hommie-front-teal.vercel.app"];
 const corsOptions = { 
     origin: (origin, callback) => {
         if (whiteList.includes(origin)) {
