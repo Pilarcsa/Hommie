@@ -35,7 +35,7 @@ const getPostsById = async (req, res) => {
 }
 
 // Devuelve los posts creados por el usuario autenticado
-const getMyPosts = async (req, res) => {
+/*const getMyPosts = async (req, res) => {
   try {
     const userId = req.decoded?.id;
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
@@ -51,7 +51,7 @@ const getMyPosts = async (req, res) => {
     console.error("[/post/me] BYPASS ERROR:", err?.stack || err);
     return response.sendError(res, "error del servidor", 500);
   }
-};
+};*/
 
 // Obtiene todos los posts existentes en la base de datos
 const getAllPosts = async (req, res) => {

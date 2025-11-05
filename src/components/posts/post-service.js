@@ -27,9 +27,8 @@ return posts
 }
 
 // Obtiene posts del usuario autenticado usando ObjectId normalizado
-const getMyPosts = async (userId) => {
-  return postModel.find({ userId: toOid(userId) }).select("-__v");
-};
+/*const getMyPosts = async (userId) => {
+  return postModel.find({ userId: toOid(userId) }).select("-__v");};*/
 
 const getAllPosts = async () => {
   const posts = await postModel.find().select("-__v");

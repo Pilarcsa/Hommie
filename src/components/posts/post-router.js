@@ -8,7 +8,7 @@ const router = express.Router();
 // Define las rutas principales para crear, leer, actualizar y eliminar posts
 router.post("/", authMiddleware, postController.createPost);
 router.get("/feed", postController.getAllPosts);
-router.get("/me", authMiddleware, postController.getMyPosts);
+//router.get("/me", authMiddleware, postController.getMyPosts);
 router.get("/", authMiddleware,postController.getPostsById);
 router.patch("/:id", authMiddleware, postController.updatePostById);
 router.delete("/:id", authMiddleware, postController.deletePost);
