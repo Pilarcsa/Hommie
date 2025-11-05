@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/", authMiddleware, postController.createPost);
 router.get("/feed", postController.getAllPosts);
 //router.get("/me", authMiddleware, postController.getMyPosts);
-router.get("/", authMiddleware,postController.getPostsById);
+router.get("/:id", authMiddleware,postController.getPostsById);
 router.patch("/:id", authMiddleware, postController.updatePostById);
 router.delete("/:id", authMiddleware, postController.deletePost);
 
