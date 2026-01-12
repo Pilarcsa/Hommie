@@ -8,28 +8,20 @@ const toOid = (id) => new mongoose.Types.ObjectId(id);
 const createPost = async (data) => {
   const post = new postModel(data);
   await post.save();
-  const { updatedAt, _id, __v, ...cleanedPost } = post.toObject();
+  const { updatedAt, __v, ...cleanedPost } = post.toObject();
   return cleanedPost;
 };
 
 // Busca posts por userId y añade datos básicos del usuario
-/*const getPostsById = async (id) => {
-  console.log(id)
-  const posts = await postModel
-    .find({ userId: id })
-    .populate("userId", "fullName avatarUrl age city occupation title description")
-    .select("-__v");
+const getPostsById = async (userId) => {
+  if (!userId) return [];
+ const posts = await postModel
+ .find({ userId })
+ .select("-__v");
   return posts;
-};*/
-const getPostsById = async(id) =>{
-const posts = await postModel.find({userId:id}).select("-__v")
-return posts
 }
 
-// Obtiene posts del usuario autenticado usando ObjectId normalizado
-const getMyPosts = async (userId) => {
-  return postModel.find({ userId: toOid(userId) }).select("-__v");
-};
+
 
 const getAllPosts = async () => {
   const posts = await postModel.find().select("-__v");
@@ -49,7 +41,6 @@ const updatePostById = async (id, data) => {
 export default {
   createPost,
   getPostsById,
-  getMyPosts,
   getAllPosts,
   deletePost,
   updatePostById,

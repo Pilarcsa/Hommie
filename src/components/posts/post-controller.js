@@ -1,7 +1,6 @@
 import response from "../../utils/response.js"
 import postService from "./post-service.js";
 import mongoose from "mongoose";
-import postModel from "./post-model.js";
 
 // Crea un nuevo post asociando el usuario autenticado al contenido enviado
 const createPost = async (req, res) => {
@@ -23,19 +22,31 @@ const createPost = async (req, res) => {
 };
 
 // Obtiene los posts publicados por un usuario específico
+
+
 const getPostsById = async (req, res) => {
-  const id = req.decoded?.user.userId;
-  try {
-    const posts = await postService.getPostsById(id);
-    if (!posts.length) return response.sendError(res, "usuario no ha publicado", 404)
-    return response.sendSuccess(res, "posts encontrados", posts, 200)
+ try {
+    const userId = req.decoded?.id;
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return response.sendError(res, "userId inválido", 400);
+    }
+
+    const posts = await postService.getPostsById(userId);
+
+    if (!posts.length) {
+      return response.sendSuccess(res, "Este usuario no tiene posts aún", []);
+    }
+
+    return response.sendSuccess(res, "posts del usuario", posts, 200);
   } catch (error) {
-    return response.sendError(res, error.message, 500)
+    console.error("Error en getPostsById:", error);
+    return response.sendError(res, error.message || "error del servidor", 500);
   }
-}
+};
 
 // Devuelve los posts creados por el usuario autenticado
-/*const getMyPosts = async (req, res) => {
+/*
   try {
     const userId = req.decoded?.id;
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
@@ -51,7 +62,7 @@ const getPostsById = async (req, res) => {
     console.error("[/post/me] BYPASS ERROR:", err?.stack || err);
     return response.sendError(res, "error del servidor", 500);
   }
-};*/
+*/
 
 // Obtiene todos los posts existentes en la base de datos
 const getAllPosts = async (req, res) => {
@@ -97,7 +108,6 @@ const updatePostById = async (req, res) => {
 export default {
   createPost,
   getPostsById,
-  getMyPosts,
   getAllPosts,
   deletePost,
   updatePostById
