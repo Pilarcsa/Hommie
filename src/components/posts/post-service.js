@@ -13,22 +13,17 @@ const createPost = async (data) => {
 };
 
 // Busca posts por userId y añade datos básicos del usuario
-const getPostsById = async (userId) => {
-  if (!userId) return [];
- const posts = await postModel
- .find({ userId })
- .select("-__v");
+const getPostsByUserId = async (userId) => {
+  const posts = await postModel.find({ userId: new mongoose.Types.ObjectId(userId)}).select("-__v");
   return posts;
 }
-
-
 
 const getAllPosts = async () => {
   const posts = await postModel.find().select("-__v");
   return posts;
 };
 
-const deletePost = async (id) => {
+const deletePostById = async (id) => {
   await postModel.findByIdAndDelete(id);
 };
 
@@ -40,8 +35,8 @@ const updatePostById = async (id, data) => {
 
 export default {
   createPost,
-  getPostsById,
+  getPostsByUserId,
   getAllPosts,
-  deletePost,
+  deletePostById,
   updatePostById,
 };

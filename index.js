@@ -21,10 +21,10 @@ app.use(express.json());
 const whiteList = ["http://localhost:5173", "https://hommie-front-teal.vercel.app"];
 const corsOptions = { 
     origin: (origin, callback) => {
-        if (whiteList.includes(origin)) {
+        if (whiteList.includes(origin)|| !origin) {
             callback(null, true);
         } else {
-            console.log(origin);
+            console.log("Origen denegado:", origin);
             callback(new Error("no esta permitido por Cors"));
         }
     },
@@ -43,7 +43,7 @@ try {
 }
 
 // Rutas principales de la API
-app.use("/api/user", userRouter);
+app.use("/api/profile", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 
