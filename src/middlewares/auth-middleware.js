@@ -15,7 +15,7 @@ const authMiddleware = (req, res, next) => {
     if (!token) return response.sendError(res, "no autenticado", 401);
 
     // Decodifica y verifica el token JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+   const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secreto_por_defecto');
    
     // Extrae y valida el id del usuario contenido en el token
     const rawId = decoded?.user?._id;
