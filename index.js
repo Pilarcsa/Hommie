@@ -11,7 +11,7 @@ import cors from "cors";
 process.env.NODE_ENV === "production" ? console.log("modo produccion") : console.log("modo desarrollo");
 
 const app = express();
-
+app.set('trust proxy', 1)  
 // Configura middlewares de seguridad y parsing
 app.use(cookieParser());
 app.use(helmet());
