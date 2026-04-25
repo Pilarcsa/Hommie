@@ -1,5 +1,6 @@
 import postModel from "./post-model.js";
 import mongoose from "mongoose";
+import userModel from "../users/users-model.js";
 
 // Convierte un string a ObjectId de MongoDB
 const toOid = (id) => new mongoose.Types.ObjectId(id);
@@ -14,13 +15,16 @@ const createPost = async (data) => {
 
 // Busca posts por userId y añade datos básicos del usuario
 const getPostsByUserId = async (userId) => {
-  const posts = await postModel.find({ userId: new mongoose.Types.ObjectId(userId)}).populate("userId", "fullName age ocupation").select("-__v");
+  const posts = await postModel.find({ userId: new mongoose.Types.ObjectId(userId)}).populate("userId", "fullName age ocupation avatarUrl").select("-__v");
   return posts;
 }
 
 const getAllPosts = async () => {
-  const posts = await postModel.find().populate("userId", "fullName age ocupation").select("-__v");
+    console.log("modelos registrados:", mongoose.modelNames()); // ← añade esto
+  const posts = await postModel.find().populate("userId", "fullName age ocupation avatarUrl").select("-__v") .lean();
+   console.log("userId:", JSON.stringify(posts[0]?.userId)); // ← y esta
   return posts;
+  
 };
 
 const deletePostById = async (id) => {
