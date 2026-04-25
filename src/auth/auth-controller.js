@@ -45,3 +45,4 @@ export const login = async (req, res) => {
         return response.sendError(res, `Error en el servidor: ${error.message}`, 500);
     }
 };
+

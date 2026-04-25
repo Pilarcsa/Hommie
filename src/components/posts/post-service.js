@@ -14,12 +14,12 @@ const createPost = async (data) => {
 
 // Busca posts por userId y añade datos básicos del usuario
 const getPostsByUserId = async (userId) => {
-  const posts = await postModel.find({ userId: new mongoose.Types.ObjectId(userId)}).select("-__v");
+  const posts = await postModel.find({ userId: new mongoose.Types.ObjectId(userId)}).populate("userId", "fullName age ocupation avatarUrl").select("-__v");
   return posts;
 }
 
 const getAllPosts = async () => {
-  const posts = await postModel.find().select("-__v");
+  const posts = await postModel.find().populate("userId", "fullName age ocupation avatarUrl").select("-__v");
   return posts;
 };
 
