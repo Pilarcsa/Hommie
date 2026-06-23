@@ -20,9 +20,7 @@ const getPostsByUserId = async (userId) => {
 }
 
 const getAllPosts = async () => {
-    console.log("modelos registrados:", mongoose.modelNames()); // ← añade esto
   const posts = await postModel.find().populate("userId", "fullName age ocupation avatarUrl").select("-__v") .lean();
-   console.log("userId:", JSON.stringify(posts[0]?.userId)); // ← y esta
   return posts;
   
 };

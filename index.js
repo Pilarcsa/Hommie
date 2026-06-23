@@ -47,6 +47,22 @@ app.use("/api/profile", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/post", postRouter);
 
+// Middleware 404: cuando la ruta no existe
+app.use((req, res) => {
+  res.status(404).json({ 
+    error: 'Ruta no encontrada',
+    status: 404
+  });
+});
+
+// Middleware 500: errores del servidor
+app.use((err, req, res, next) => {
+  res.status(500).json({ 
+    error: 'Error del servidor',
+    status: 500
+  });
+});
+
 // Inicializa el servidor
 app.listen(process.env.PORT, () => {
     console.log("servidor corriendo en puerto localhost 3000.");

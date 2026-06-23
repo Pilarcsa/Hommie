@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 export async function mongoConfig() {
     try{
         const mongoUri = process.env.MONGO_URI
+         if (!mongoUri) {
+          throw new Error('MONGO_URI no está definida')
+        }
         await mongoose.connect(mongoUri)
         console.log("mongodb conectado correctamente");
     }
