@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import dotenv from "dotenv";
 
+dotenv.config();
 // Conecta la aplicación a la base de datos MongoDB usando la URI del entorno
 export async function mongoConfig() {
     try{
@@ -7,6 +9,7 @@ export async function mongoConfig() {
          if (!mongoUri) {
           throw new Error('MONGO_URI no está definida')
         }
+        console.log(mongoUri)
         await mongoose.connect(mongoUri)
         console.log("mongodb conectado correctamente");
     }

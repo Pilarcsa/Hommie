@@ -13,7 +13,6 @@ const createPost = async (req, res) => {
     }
 
     const data = { ...req.body };
-    delete data.userId;
     data.userId = userId;
 
     const post = await postService.createPost(data);
@@ -62,7 +61,7 @@ const deletePostById = async (req, res) => {
       return response.sendError(res, "id invalido", 400)
     }
     await postService.deletePostById(id)
-    return response.sendSuccess(res, "post eliminado exitosamente")
+    return response.sendSuccess(res, "post eliminado exitosamente", 200)
   } catch (error) {
     return response.sendError(res, error.message, 500)
   }

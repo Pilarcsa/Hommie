@@ -1,7 +1,10 @@
 import response from "../utils/response.js"
+import dotenv from "dotenv";
 import serviceUser from "../components/users/user-service.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+
+dotenv.config();
 
 export const login = async (req, res) => {
     try {
@@ -26,7 +29,10 @@ export const login = async (req, res) => {
 
         // Crea un token JWT y lo guarda como cookie segura
         delete user.password;
-        const token = jwt.sign({ user }, process.env.JWT_SECRET || 'secreto_por_defecto', {
+          if (!process.env.JWT_SECRET) {
+          throw new Error('JWT_SECRET no está definida')
+        }
+        const token = jwt.sign({ user }, process.env.JWT_SECRET, {
             expiresIn: "1h"
         });
 

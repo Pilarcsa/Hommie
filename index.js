@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import { mongoConfig } from "./src/config/mongo-config.js";
 import userRouter from "./src/components/users/user-router.js";
 import authRouter from "./src/auth/auth-router.js"
@@ -6,6 +7,7 @@ import postRouter from "./src/components/posts/post-router.js"
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
+dotenv.config();
 
 // Indica si la aplicación se ejecuta en modo producción o desarrollo
 process.env.NODE_ENV === "production" ? console.log("modo produccion") : console.log("modo desarrollo");
@@ -55,16 +57,30 @@ app.use((req, res) => {
   });
 });
 
-// Middleware 500: errores del servidor
-app.use((err, req, res, next) => {
-  res.status(500).json({ 
-    error: 'Error del servidor',
-    status: 500
-  });
-});
-
 // Inicializa el servidor
 app.listen(process.env.PORT, () => {
     console.log("servidor corriendo en puerto localhost 3000.");
     console.log(process.env.PORT);
 });
+
+
+// Función para cerrar todo limpiamente
+const gracefulShutdown = async (signal) => {
+console.log('Recibida señal ${signal}. Cerrando el servidor de forma limpia...');
+
+try {
+// 1. Cerrar la conexión de Mongoose
+await mongoose.connection.close();
+console.log('Conexión a MongoDB cerrada correctamente.');
+
+// 2. Salir del proceso de Node
+process.exit(0);
+} catch (err) {
+console.error('Error al cerrar la conexión de MongoDB:', err);
+process.exit(1);
+}
+};
+
+// Escuchar señales de apagado del sistema
+process.on('SIGINT', () => gracefulShutdown('SIGINT')); // Ctrl+C en la terminal
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM')); // Señal de parada de producción (Docker/PM2)
