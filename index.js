@@ -7,7 +7,12 @@ import postRouter from "./src/components/posts/post-router.js"
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
-dotenv.config();
+
+if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: '.env.prod' });
+} else {
+  dotenv.config({ path: '.env.develop' });
+}
 
 // Indica si la aplicación se ejecuta en modo producción o desarrollo
 process.env.NODE_ENV === "production" ? console.log("modo produccion") : console.log("modo desarrollo");
