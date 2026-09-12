@@ -8,9 +8,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import cors from "cors";
 
-if (process.env.NODE_ENV === 'production') {
-  dotenv.config({ path: '.env.prod' });
-} else {
+if (process.env.NODE_ENV !== 'production') {
   dotenv.config({ path: '.env.develop' });
 }
 
