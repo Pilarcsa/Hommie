@@ -1,10 +1,9 @@
 import response from "../utils/response.js"
-import dotenv from "dotenv";
 import serviceUser from "../components/users/user-service.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-dotenv.config();
+
 
 export const login = async (req, res) => {
     try {
